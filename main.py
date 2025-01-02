@@ -1,8 +1,9 @@
 import time
 import matplotlib.pyplot as plt
+from tabulate import tabulate  # Tambahkan pustaka tabulate
 
 # Dataset contoh (diperbesar untuk uji performa)
-lowongan_kerja = [{"id": i, "title": f"Job {i}", "location": "Location A", "salary": 10000 + i} for i in range(1, 600)]
+lowongan_kerja = [{"id": i, "title": f"Job {i}", "location": "Location A", "salary": 10000 + i} for i in range(1, 10001)]
 
 # Fungsi Iteratif
 def linear_search_iterative(jobs, criteria_key, criteria_value):
@@ -41,6 +42,18 @@ for size in input_sizes:
     linear_search_recursive(dataset, 0, search_key, search_value)
     end = time.time()
     recursive_times.append(end - start)
+
+# Tabel perbandingan dengan waktu diformat hingga 6 desimal
+comparison_table = []
+for i, size in enumerate(input_sizes):
+    comparison_table.append([
+        size, 
+        round(iterative_times[i], 6),  # Format hingga 6 desimal
+        round(recursive_times[i], 6)  # Format hingga 6 desimal
+    ])
+
+# Cetak tabel menggunakan tabulate
+print(tabulate(comparison_table, headers=["Ukuran Dataset", "Waktu Iteratif (detik)", "Waktu Rekursif (detik)"], tablefmt="grid"))
 
 # Plot hasil eksperimen
 plt.figure(figsize=(10, 6))
